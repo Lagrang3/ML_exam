@@ -1,0 +1,136 @@
+
+\def\today{
+    \ifcase\month
+        \or January
+        \or February
+        \or March
+        \or April
+        \or May
+        \or June
+        \or July
+        \or August
+        \or September
+        \or October
+        \or November
+        \or December
+    \fi
+    \number\day, 
+    \uppercase\expandafter{\romannumeral\year}
+}
+\def\textcolour{0.0 0.0 0.0}          % Colour of text
+%\font\tt=cmtt12  % typewriter text
+%\font\ttten=cmtt10   % typewriter text 
+%\font\bf=cmssbx10 at 12pt % bold face
+%\font\it=cmssi12 % slanted
+%\font\itsmall=cmssi10 % slanted footnote
+%\font\bfsmall=cmssbx10 % bold footnote
+%\font\smallfont=cmss10 % small text
+%\font\rm=cmr12
+%\font\rmsmall=cmr10
+%\font\ss=cmss12
+%\font\sssmall=cmss10
+
+%\def\small{\baselineskip4pt\everymath{\scriptstyle}\sssmall}
+
+\def\ln{\mathop{\hbox{\rm ln}}}
+\def\exp{\mathop{\hbox{\rm exp}}}
+
+
+%\chardef\escape=0      % \
+%\chardef\groupbegin=1  % {
+%\chardef\groupend=2    % }
+%\chardef\math=3        % $
+%\chardef\alignment=4   % &
+%\chardef\endofline=5   % <retur>
+%\chardef\parameter=6   % #
+%\chardef\superscript=7 % ^
+%\chardef\subscript=8   % _
+%\chardef\ignore=9      % <null>
+%\chardef\space=10      % ' ' and '\t'
+\chardef\letter=11      % [A,...,Z] and [a,...,z]
+\chardef\other=12       % 
+\chardef\active=13      % ~
+%\chardef\comment=14    % %
+%\chardef\invalid=15    % <delete>
+
+
+\def\erase#1{}
+\catcode`\@ = 11 % @ becomes a letter
+% macros for verbatim scanning
+\newcount\linenumber
+{\catcode`\^^I=\active % these lines must end with %
+  \gdef\obeytabs{\catcode`\^^I\active \let^^I\qquad}} 
+
+%%%% VERBATIM %%%%
+%% In this verbatim environment, any printable character
+%% except \ are treated in verbatim.
+%% \ has category code escape.
+%% example: blah blah \code a=1;\code\ blah blah.
+%% If you need to insert the character \ just type \\
+
+%% Inside a \beginttt \endtt scope, one can reference
+%% line numbers, but the label has to be scaped with \.
+%% Example 
+%% \begintt
+%%  int main(){
+%%      return 0; \linedef\here_return
+%%  }
+%% \endtt
+%% In the line \lineref{here_return} we end the program.
+
+\def\verbatim{\begingroup%
+\chardef\\="5C%
+\catcode`\{=\other%
+\catcode`\}=\other%
+\catcode`\$=\other%
+\catcode`\&=\other%
+\catcode`\#=\other%
+\catcode`\~=\other%
+\catcode`\_=\letter%
+\catcode`\^=\other%
+\catcode`\|=\other%
+\catcode`\%=\other%
+\obeylines\obeytabs\obeyspaces\tt}
+
+
+% here \erase deletes the extra space at the begining 
+\def\code{\verbatim\def\code{\endgroup}\erase}
+
+\outer\def\begintt{$$\let\par=\endgraf \verbatim \parskip=0pt
+  \rightskip-5pc%
+  \gdef\label{\linedef}
+  \everypar{%
+    \global\advance\linenumber by 1%
+    \setbox0=\hbox{\sevenrm \the\linenumber.\kern0.75em}%
+    \llap{\box0}%
+  }% 
+  \ttfinish}
+
+{\obeylines\gdef\ttfinish#1^^M#2\endtt{#1\vbox{#2}\endgroup$$}}
+
+%\newskip\ttglue % 
+%\ttglue=.5em plus.25em minus.15em % fixed ttglue
+
+%\outer\def\beginttnln{$$\let\par=\endgraf \ttverbatim \parskip=0pt
+%  \catcode`\|=0%
+%  \rightskip-5pc% 
+%  \ttfinish}
+
+%\outer\def\beginttt{$$\let\par=\endgraf \ttverbatim \parskip=0pt
+%  \catcode`\|=0%
+%  \rightskip-5pc%
+%  \everypar{%
+%   \global\advance\linenumber by 1%
+%   \setbox0=\hbox{\sevenrm \the\linenumber.\kern0.75em}%
+%   \llap{\box0}%
+%  }% 
+%  \ttfinish}
+%{\catcode`\|=0 |catcode`|\=\other % | is temporary escape character
+%  |obeylines % end of line is active
+%  |gdef|ttfinish#1^^M#2\endtt{#1|vbox{#2}|endgroup$$}}
+%\catcode`\|=\active
+%{\obeylines \gdef|{\ttverbatim \spaceskip\ttglue \let^^M=\  \let|=\endgroup}}
+
+\def\leftdisplay#1$${\leftline{\indent$\displaystyle{#1}$}$$}
+
+\catcode`\@=\other
