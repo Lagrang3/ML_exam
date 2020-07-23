@@ -101,9 +101,48 @@
 
 \begin{frame}
     \frametitle{Method}
+     \begin{block}{Main idea}
+        The amplitude of the Fourier modes give a hint
+        to the bird class.
+    \end{block}
+\end{frame}
+\begin{frame}
+    \frametitle{Method}
+        \centering{\hbox{\vbox{%
+            \hbox{\includegraphics[height=0.45\textheight]{images/amerob_time.png}}
+            \hbox{\small American robin (amerob)}}\quad
+        \vbox{%
+            \hbox{\includegraphics[height=0.45\textheight]{images/comrav_time.png}}
+            \hbox{\small Common raven (comrav)}}}}
+\end{frame}
+\begin{frame}
+    \frametitle{Method}
+        \centering{\hbox{\vbox{%
+            \hbox{\includegraphics[height=0.45\textheight]{images/amerob_spec.png}}
+            \hbox{\small American robin (amerob)}}\quad
+        \vbox{%
+            \hbox{\includegraphics[height=0.45\textheight]{images/comrav_spec.png}}
+            \hbox{\small Common raven (comrav)}}}}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Method}
         \centering{\includegraphics[width=.3\textwidth]{images/pytorch.png}}
         \vfill
-        \centering{\includegraphics[width=\textwidth]{images/model.pdf}}
+        \centering{\includegraphics[width=\textwidth]{images/model.pdf}}\pause
+        
+           \includegraphics[width=.4\textwidth]{images/relu.pdf}\pause
+           $$\mathrm{SoftMax}(x)_i = \frac{\exp(x_i)}{\sum_{j} \exp(x_j)}$$
+\end{frame}
+\begin{frame}
+    \frametitle{Method}
+    \begin{itemize}
+        \item Cross entropy as \emph{loss} function,
+        \item gradient descent for fitting,
+        \item cuda interface was used to evaluate the model 
+        and adjust its parameters.
+    \footnote{see Mitchell, Yogesh \& Subramanian \emph{Deep Learning with Pytorch} 2nd edition.}
+    \end{itemize}
 \end{frame}
 
 \begin{frame}
@@ -119,7 +158,7 @@
         \centering{\includegraphics[height=.6\textheight]{images/error.pdf}}
         \caption{Error percentage. Probability I am guessing $\approx 10^{-84}$}
     \end{figure}
-    \centering{checkout the code on \url{github}}
+    \centering{checkout the code on \url{https://github.com/Lagrang3/ML_exam}}
 \end{frame}
 
 

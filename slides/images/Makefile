@@ -1,3 +1,4 @@
-$(IMAGES):
-	./confusion.py
-	./error.py
+default : $(IMAGES)
+
+$(IMAGES) : %.pdf : %.py 
+	./$<

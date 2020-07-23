@@ -1,7 +1,7 @@
 flags=-interaction=nonstopmode -halt-on-error
 VPATH=metapost:tex:macros:images
 PREFIX:=slides
-IMAGES:=confusion.pdf error.pdf
+IMAGES:=confusion.pdf error.pdf relu.pdf
 PDFS:=$(PREFIX).pdf
 MACS:=mac.tex
 TEXS:=slides.tex
@@ -11,6 +11,9 @@ export
 default:
 	$(MAKE) $(MFLAGS) -C images
 	$(MAKE) $(MFLAGS) $(PDFS)
+
+$(IMAGES) : %.pdf : %.py
+	$(MAKE) $(MFLAGS) -C images
 
 all: slides.pdf 
 
